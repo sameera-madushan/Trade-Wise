@@ -1,0 +1,32 @@
+.choices {
+	.choices__inner {
+		background-color: #fff;
+		border-color: var(--bs-gray-300);
+		border-radius: 0.5rem;
+	}
+
+	.choices__list.choices__list--dropdown {
+		border-color: var(--bs-gray-300);
+		margin-top: 0.5rem;
+		border-radius: 0.5rem;
+		box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+	}
+
+	.choices__input.choices__input--cloned {
+		background: #fff;
+	}
+
+	.choices__list--multiple .choices__item {
+		background: var(--bs-tertiary);
+		border-color: transparent;
+	}
+
+	.choices__list--single .choices__item {
+		color: var(--bs-gray-500);
+	}
+}
+
+.choices[data-type*='select-multiple'] .choices__button,
+.choices[data-type*='text'] .choices__button {
+	border-color: var(--bs-gray-300);
+}

@@ -1,0 +1,25 @@
+{
+    "name": "Package/xconfig",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Package\\XAuth\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Sameera",
+            "email": "sameera.xyz.me@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Package\\XConfig\\XConfigServiceProvider"
+            ]
+        }
+    }
+}

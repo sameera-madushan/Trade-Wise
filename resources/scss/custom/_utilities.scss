@@ -1,0 +1,23 @@
+.min-w-0 {
+	min-width: 0;
+}
+
+.cursor-pointer {
+	cursor: pointer;
+}
+
+.user-select-none {
+	user-select: none;
+}
+
+.field-invalid {
+	width: 100%;
+	margin-top: 0.25rem;
+	font-size: 0.875em;
+	color: var(--bs-danger);
+}
+
+.nav-item .nav-link.active {
+	color: white;
+	background-color: $tertiary;
+}

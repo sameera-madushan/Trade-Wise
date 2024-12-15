@@ -1,0 +1,24 @@
+{
+	"name": "Package/xauth",
+	"type": "project",
+	"license": "MIT",
+	"autoload": {
+		"psr-4": {
+			"Package\\XAuth\\": "src/"
+		}
+	},
+	"authors": [
+		{
+			"name": "Sameera",
+			"email": "sameera.xyz.me@gmail.com"
+		}
+	],
+	"minimum-stability": "dev",
+	"extra": {
+		"laravel": {
+			"providers": [
+				"Package\\XAuth\\XAuthServiceProvider"
+			]
+		}
+	}
+}
