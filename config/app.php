@@ -160,7 +160,6 @@ return [
          * Package Service Providers...
          */
         \Package\XAuth\XAuthServiceProvider::class,
-        \Package\XConfig\XConfigServiceProvider::class,
         \Package\XCalendar\XCalendarServiceProvider::class,
         \Package\XDashboard\XDashboardServiceProvider::class,
         \Package\XReport\XReportServiceProvider::class,
