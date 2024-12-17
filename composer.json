@@ -35,13 +35,13 @@
 			"Database\\Factories\\": "database/factories/",
 			"Database\\Seeders\\": "database/seeders/",
 			"Package\\XAuth\\": "packages/Package/XAuth/src",
-			"Package\\XConfig\\": "packages/Package/XConfig/src",
 			"Package\\XCalendar\\": "packages/Package/XCalendar/src",
 			"Package\\XDashboard\\": "packages/Package/XDashboard/src",
 			"Package\\XReport\\": "packages/Package/XReport/src"
 		},
 		"files": [
-			"app/Http/Helpers.php"
+			"app/Http/Helpers.php",
+      "app/Helpers/UserDatabaseHelper.php"
 		]
 	},
 	"autoload-dev": {

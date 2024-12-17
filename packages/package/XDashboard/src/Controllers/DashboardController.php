@@ -26,7 +26,6 @@ class DashboardController extends Controller
                 SUM(CASE WHEN pnl >= 0 THEN pnl ELSE 0 END) as total_profit,
                 SUM(CASE WHEN pnl < 0 THEN pnl ELSE 0 END) as total_loss
             ')
-            ->where('user_id', Auth::id())
             ->whereNull('deleted_at')
             ->whereRaw('YEAR(FROM_UNIXTIME(timestamp / 1000)) = ?', [$currentYear])
             ->groupByRaw('MONTH(FROM_UNIXTIME(timestamp / 1000))')
@@ -73,7 +72,6 @@ class DashboardController extends Controller
                 SUM(CASE WHEN pnl >= 0 THEN pnl ELSE 0 END) as total_profit,
                 SUM(CASE WHEN pnl < 0 THEN pnl ELSE 0 END) as total_loss
             ')
-            ->where('user_id', Auth::id())
             ->whereNull('deleted_at')
             ->whereRaw('MONTH(FROM_UNIXTIME(timestamp / 1000)) = ?', [$currentMonth])
             ->whereRaw('YEAR(FROM_UNIXTIME(timestamp / 1000)) = ?', [$currentYear])

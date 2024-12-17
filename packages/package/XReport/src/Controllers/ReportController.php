@@ -21,8 +21,7 @@ class ReportController extends Controller
         $startOfDay = Carbon::parse($date)->startOfDay()->timestamp * 1000;
         $endOfDay = Carbon::parse($date)->endOfDay()->timestamp * 1000;
 
-        $query = Trade::where('user_id', auth()->id())
-            ->whereBetween('timestamp', [$startOfDay, $endOfDay]);
+        $query = Trade::whereBetween('timestamp', [$startOfDay, $endOfDay]);
 
         return DataTables::of($query)
             ->make(true);
@@ -40,8 +39,7 @@ class ReportController extends Controller
         $startOfMonth = Carbon::create($year, $month, 1)->startOfMonth()->timestamp * 1000;
         $endOfMonth = Carbon::create($year, $month, 1)->endOfMonth()->timestamp * 1000;
 
-        $query = Trade::where('user_id', auth()->id())
-            ->whereBetween('timestamp', [$startOfMonth, $endOfMonth]);
+        $query = Trade::whereBetween('timestamp', [$startOfMonth, $endOfMonth]);
 
         return DataTables::of($query)
             ->make(true);
@@ -58,8 +56,7 @@ class ReportController extends Controller
         $startOfYear = Carbon::create($year, 1, 1)->startOfYear()->timestamp * 1000;
         $endOfYear = Carbon::create($year, 1, 1)->endOfYear()->timestamp * 1000;
 
-        $query = Trade::where('user_id', auth()->id())
-            ->whereBetween('timestamp', [$startOfYear, $endOfYear]);
+        $query = Trade::whereBetween('timestamp', [$startOfYear, $endOfYear]);
 
         return DataTables::of($query)
             ->make(true);

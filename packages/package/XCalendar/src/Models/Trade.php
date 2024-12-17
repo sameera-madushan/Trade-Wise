@@ -10,8 +10,10 @@ class Trade extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $connection = 'sqlite_user';
+
     protected $fillable = [
-        'user_id', 'timestamp', 'curruncy_pair', 'buy_value', 'buy_price',
+        'timestamp', 'curruncy_pair', 'buy_value', 'buy_price',
         'sell_value', 'sell_price', 'bought_amount', 'position', 'pnl', 'timestamp'
     ];
 }

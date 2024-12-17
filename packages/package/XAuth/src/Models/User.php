@@ -20,6 +20,8 @@ class User extends Authenticatable implements HasMedia
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles, InteractsWithMedia;
 
+    protected $connection = 'mysql';
+
     /**
      * The attributes that are mass assignable.
      *

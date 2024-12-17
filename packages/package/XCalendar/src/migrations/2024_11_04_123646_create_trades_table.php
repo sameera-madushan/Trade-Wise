@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('trades', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
             $table->string('curruncy_pair')->nullable();
             $table->decimal('buy_value', 15, 2)->nullable();
             $table->decimal('buy_price', 15, 2)->nullable();
@@ -25,8 +24,6 @@ return new class extends Migration
             $table->bigInteger('timestamp');
             $table->timestamps();
             $table->softDeletes();
-
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

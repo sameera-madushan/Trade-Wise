@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('trade_notes', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('trade_id');
             $table->longText('quill_content');
             $table->softDeletes();

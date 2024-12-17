@@ -93,6 +93,11 @@ return [
             // 'trust_server_certificate' => env('DB_TRUST_SERVER_CERTIFICATE', 'false'),
         ],
 
+        'sqlite_user' => [
+            'driver' => 'sqlite',
+            'database' => database_path('default.sqlite'),
+        ],
+
     ],
 
     /*

@@ -4,7 +4,6 @@ namespace Package\XAuth\Controllers\Auth;
 
 use Inertia\Inertia;
 use Inertia\Response;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Package\XAuth\Models\User;
 use Illuminate\Validation\Rules;
@@ -49,6 +48,8 @@ class RegisteredUserController extends Controller
         event(new Registered($user));
 
         Auth::login($user);
+
+        initializeUserDatabase($user->id);
 
         return redirect()->to(RouteServiceProvider::getHomeRoute());
     }

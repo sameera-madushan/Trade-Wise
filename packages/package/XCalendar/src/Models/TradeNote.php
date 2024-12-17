@@ -10,7 +10,9 @@ class TradeNote extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $connection = 'sqlite_user';
+
     protected $fillable = [
-        'user_id', 'trade_id', 'quill_content'
+        'trade_id', 'quill_content'
     ];
 }

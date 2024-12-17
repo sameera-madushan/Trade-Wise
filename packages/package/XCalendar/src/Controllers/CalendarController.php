@@ -27,7 +27,6 @@ class CalendarController extends Controller
 
         try {
             $validatedData = $request->validated();
-            $validatedData['user_id'] = auth()->id();
             $validatedData['timestamp'] = $timestamp;
 
             if (!empty($validatedData['editing']) && !empty($validatedData['rowId'])) {
@@ -37,10 +36,9 @@ class CalendarController extends Controller
                 if ($trade) {
 
                     $trade->update($validatedData);
-
                     DB::commit();
-
                     return redirect()->back()->with('message', ['type' => 'success', 'message' => 'Trade updated successfully']);
+
                 } else {
 
                     DB::rollBack();
@@ -59,14 +57,13 @@ class CalendarController extends Controller
             DB::rollBack();
 
             \Log::error("Error storing trade: " . $e->getMessage());
-
             return redirect()->back()->with('message', ['type' => 'error', 'message' => 'An error occurred while saving the trade.']);
         }
     }
 
     public function getTrades($timestamp)
     {
-        $trades = Trade::where('user_id', auth()->id())->where('timestamp', $timestamp)->get();
+        $trades = Trade::where('timestamp', $timestamp)->get();
 
         return DataTables::of($trades)
         ->rawColumns(['actions'])
@@ -99,19 +96,15 @@ class CalendarController extends Controller
             DB::rollBack();
 
             \Log::error("Error deleting trade: " . $e->getMessage());
-
             return redirect()->back()->with('message', ['type' => 'error', 'message' => 'An error occurred while deleting the trade.']);
         }
     }
 
     public function getPnlsForCalendar()
     {
-        $userId = auth()->id();
-
         // Calculate daily PnL
         $dailyPnls = DB::table('trades')
             ->selectRaw('DATE(FROM_UNIXTIME(timestamp / 1000)) as trade_date, SUM(pnl) as total_pnl')
-            ->where('user_id', $userId)
             ->whereNull('deleted_at')
             ->groupBy('trade_date')
             ->orderBy('trade_date', 'asc')
@@ -135,9 +128,7 @@ class CalendarController extends Controller
 
         try {
 
-            $note = TradeNote::where('trade_id', $id)
-                ->where('user_id', auth()->id())
-                ->first();
+            $note = TradeNote::where('trade_id', $id)->first();
 
             if ($note) {
 
@@ -148,7 +139,6 @@ class CalendarController extends Controller
 
                 TradeNote::create([
                     'trade_id' => $id,
-                    'user_id' => auth()->id(),
                     'quill_content' => request('content')
                 ]);
             }
@@ -168,11 +158,7 @@ class CalendarController extends Controller
 
     public function getNote($timestamp, $id)
     {
-        $userId = auth()->id();
-
-        $note = TradeNote::where('trade_id', $id)
-            ->where('user_id', $userId)
-            ->first();
+        $note = TradeNote::where('trade_id', $id)->first();
 
         if (!$note) {
             return redirect()->back()->with('message', ['type' => 'error', 'message' => 'Note not found']);
