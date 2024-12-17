@@ -1,5 +1,5 @@
 <script setup>
-import { getCurrentInstance as instance, defineProps, ref, onMounted  } from 'vue'
+import { getCurrentInstance as instance, ref, onMounted  } from 'vue'
 import DashboardLayout from '@/Layouts/User.vue'
 import { Head, router } from '@inertiajs/vue3'
 
@@ -14,13 +14,6 @@ const { proxy } = instance()
 proxy.$appState.parentSelection = null
 proxy.$appState.elementName = 'Calander'
 
-const props = defineProps({
-  uuid: {
-    type: String,
-    default: null,
-  }
-})
-
 const events = ref([]);
 
 const calendarOptions = ref({
@@ -32,7 +25,7 @@ const calendarOptions = ref({
 
 async function getEvents() {
   try {
-    const response = await axios.get(`/user/${props.uuid}/calendar/get-pnls`);
+    const response = await axios.get(`/user/calendar/get-pnls`);
     events.value = response.data;
   } catch (error) {
     console.error('Failed to fetch events:', error);
@@ -42,7 +35,7 @@ async function handleDateClick(info) {
   const selectedDate = info.dateStr
   const timestamp = new Date(selectedDate).getTime();
 
-  router.get(`/user/${props.uuid}/calendar/${timestamp}`)
+  router.get(`/user/calendar/${timestamp}`)
 }
 
 onMounted(() => {
@@ -54,7 +47,7 @@ onMounted(() => {
 <template>
 	<Head title="Calander" />
 
-	<DashboardLayout :uuid="props.uuid">
+	<DashboardLayout>
 		<div class="row mt-4 mb-4">
 			<div class="col-12 col-xl-12">
 				<div class="card border-0 shadow components-section">

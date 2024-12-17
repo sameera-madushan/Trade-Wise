@@ -20,8 +20,8 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                $user = Auth::guard($guard)->user();
-                return redirect('/user/' . $user->uuid);
+                // $user = Auth::guard($guard)->user();
+                return redirect('/user');
             }
         }
 

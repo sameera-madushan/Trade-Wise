@@ -11,14 +11,12 @@ use Yajra\DataTables\Facades\DataTables;
 
 class ReportController extends Controller
 {
-    public function indexDailyReport($uuid)
+    public function indexDailyReport()
     {
-        return Inertia::render('XReport/Daily', [
-            'uuid' => $uuid,
-        ]);
+        return Inertia::render('XReport/Daily');
     }
 
-    public function dailyReportData(Request $request, $uuid, $date)
+    public function dailyReportData(Request $request, $date)
     {
         $startOfDay = Carbon::parse($date)->startOfDay()->timestamp * 1000;
         $endOfDay = Carbon::parse($date)->endOfDay()->timestamp * 1000;
@@ -35,7 +33,7 @@ class ReportController extends Controller
         return Inertia::render('XReport/Monthly');
     }
 
-    public function monthlyReportData(Request $request, $uuid, $date)
+    public function monthlyReportData(Request $request, $date)
     {
         [$year, $month] = explode('-', $date);
 
@@ -55,7 +53,7 @@ class ReportController extends Controller
         return Inertia::render('XReport/Yearly');
     }
 
-    public function yearlyReportData(Request $request, $uuid, $year)
+    public function yearlyReportData(Request $request, $year)
     {
         $startOfYear = Carbon::create($year, 1, 1)->startOfYear()->timestamp * 1000;
         $endOfYear = Carbon::create($year, 1, 1)->endOfYear()->timestamp * 1000;

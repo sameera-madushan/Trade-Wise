@@ -2,16 +2,8 @@
 import { ref } from 'vue'
 import { Link } from '@inertiajs/vue3'
 import { useAbility } from '@casl/vue'
-import { defineProps } from 'vue'
 
 const { can } = useAbility()
-
-const props = defineProps({
-  uuid: {
-    type: String,
-    default: null,
-  }
-})
 
 function getCurrentDateTimestamp() {
   const today = new Date();
@@ -25,29 +17,29 @@ const menu = ref([
 	{ name: 'Dashboard',
     label: 'Dashboard',
     icon: 'dashboard',
-    route: `/user/${props.uuid}`
+    route: `/user`
   },
 	{ separator: true },
 	{
 		name: 'Today',
 		label: 'Today',
 		icon: 'today',
-    route: `/user/${props.uuid}/calendar/${timestamp}`
+    route: `/user/calendar/${timestamp}`
 	},
 	{
 		name: 'Calendar',
 		label: 'Calendar',
 		icon: 'calendar_month',
-    route: `/user/${props.uuid}/calendar`
+    route: `/user/calendar`
 	},
 	{
 		name: 'Reports',
 		label: 'Reports',
 		icon: 'bar_chart',
 		items: [
-			{ name: 'daily_pnl', label: 'Daily Report', route: `/user/${props.uuid}/report/daily_pnl`},
-			{ name: 'monthly_pnl', label: 'Monthly Report', route:  `/user/${props.uuid}/report/monthly_pnl`},
-			{ name: 'yearly_pnl', label: 'Yearly Report', route: `/user/${props.uuid}/report/yearly_pnl`},
+			{ name: 'daily_pnl', label: 'Daily Report', route: `/user/report/daily_pnl`},
+			{ name: 'monthly_pnl', label: 'Monthly Report', route:  `/user/report/monthly_pnl`},
+			{ name: 'yearly_pnl', label: 'Yearly Report', route: `/user/report/yearly_pnl`},
 		],
 	},
 ])
@@ -59,7 +51,7 @@ function canVisible(gates) {
 
 <template>
 	<nav class="navbar navbar-dark navbar-theme-primary px-4 col-12 d-lg-none">
-		<Link class="navbar-brand me-lg-5" :href="`/user/${props.uuid}`">
+		<Link class="navbar-brand me-lg-5" :href="`/user`">
 			<img class="navbar-brand-dark" src="/assets/img/logo_white.png" alt="Volt logo" />
 			<img class="navbar-brand-light" src="/assets/img/logo_black.png" alt="Volt logo" />
 		</Link>
@@ -80,7 +72,7 @@ function canVisible(gates) {
 	<SimpleBar id="sidebarMenu" class="sidebar d-lg-block bg-primary text-white collapse" data-simplebar>
 		<div class="sidebar-inner px-3 pt-3">
 			<div class="mb-4 text-center">
-				<Link :href="`/user/${props.uuid}`"><img src="/assets/img/logo_white.png" alt="TravelMo Logo" style="max-width: 200px" /></Link>
+				<Link :href="`/user`"><img src="/assets/img/logo_white.png" alt="TravelMo Logo" style="max-width: 200px" /></Link>
 			</div>
 			<div class="nav-separator d-flex d-md-none align-items-center justify-content-between justify-content-md-center pb-4">
 				<div class="d-flex align-items-center">

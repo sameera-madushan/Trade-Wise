@@ -19,6 +19,7 @@ class RouteServiceProvider extends ServiceProvider
      * @var string
      */
     public const ADMIN_HOME = '/admin';
+    public const USER_HOME = '/user';
 
     /**
      * Define your route model bindings, pattern filters, and other route configuration.
@@ -51,7 +52,7 @@ class RouteServiceProvider extends ServiceProvider
         if ($user && $user->hasRole(config('roles.admin'))) {
             return self::ADMIN_HOME;
         } else {
-            return '/user/' . $user->uuid;
+            return self::USER_HOME;
         }
     }
 }

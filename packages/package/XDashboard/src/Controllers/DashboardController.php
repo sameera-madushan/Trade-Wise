@@ -10,11 +10,9 @@ use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
-    public function index($uuid)
+    public function index()
     {
-        return Inertia::render('XAuth/User/Dashboard', [
-            'uuid' => $uuid,
-        ]);
+        return Inertia::render('XAuth/User/Dashboard');
     }
 
     public function getMonthlyPnL()

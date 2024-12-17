@@ -18,16 +18,13 @@ const props = defineProps({
 		type: String,
 		default: null,
 	},
-  uuid: {
-    type: String,
-    default: null,
-  }
+  isUser: Boolean
 })
 
-const dashboardUrl = computed(() => (props.uuid ? `/user/${props.uuid}` : '/admin'))
+const dashboardUrl = computed(() => (props.isUser ? `/user` : '/admin'))
 
 const DashboardLayout = computed(() => {
-	return props.uuid
+	return props.isUser
 		? defineAsyncComponent(() => import('@/Layouts/User.vue'))
 		: defineAsyncComponent(() => import('@/Layouts/Admin.vue'))
 })
@@ -46,7 +43,7 @@ const DashboardLayout = computed(() => {
 				</PageHeader>
 				<div class="card border-0 shadow components-section mb-4">
 					<div class="card-body">
-						<UpdateProfileInformationForm :must-verify-email="mustVerifyEmail" :status="status" :uuid="props.uuid"/>
+						<UpdateProfileInformationForm :must-verify-email="mustVerifyEmail" :status="status" :isUser="props.isUser"/>
 					</div>
 				</div>
 				<div class="card border-0 shadow components-section mb-4">
@@ -56,7 +53,7 @@ const DashboardLayout = computed(() => {
 				</div>
 				<div class="card border-0 shadow components-section">
 					<div class="card-body">
-						<DeleteUserForm :uuid="props.uuid"/>
+						<DeleteUserForm  :isUser="props.isUser"/>
 					</div>
 				</div>
 			</div>

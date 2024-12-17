@@ -6,12 +6,12 @@ use Package\XCalendar\Controllers\CalendarController;
 
 Route::group(['middleware' => ['web', 'auth']], function () {
 
-    Route::prefix('/user/{uuid}')->group(function () {
+    Route::prefix('/user')->group(function () {
 
        Route::prefix('/calendar')->group(function () {
 
-            Route::get('/', function ($uuid) {
-                return Inertia::render('XCalendar/Index', compact('uuid'));
+            Route::get('/', function () {
+                return Inertia::render('XCalendar/Index');
             });
 
             Route::get('/get-pnls', [CalendarController::class, 'getPnlsForCalendar'])->name('get.pnls');

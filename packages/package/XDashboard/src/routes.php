@@ -6,7 +6,7 @@ use Package\XDashboard\Controllers\DashboardController;
 
 Route::group(['middleware' => ['web', 'auth', 'user']], function () {
 
-    Route::prefix('/user/{uuid}')->group(function () {
+    Route::prefix('/user')->group(function () {
 
         Route::get('/', [DashboardController::class, 'index'])->name('index.dashboard');
         Route::get('/get-monthly-pnls', [DashboardController::class, 'getMonthlyPnL'])->name('get.monthly.pnls');

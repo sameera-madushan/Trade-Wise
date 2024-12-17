@@ -8,10 +8,7 @@ let confirmModal = ref()
 const passwordInput = ref(null)
 
 const props = defineProps({
-  uuid: {
-    type: String,
-    default: null,
-  }
+  isUser: Boolean
 })
 
 const form = useForm({
@@ -31,7 +28,7 @@ const confirmUserDeletion = () => {
 }
 
 const deleteUser = () => {
-	form.delete(props.uuid ? `/user/${props.uuid}/my-profile` : '/admin/my-profile', {
+	form.delete(props.isUser ? `/user/my-profile` : '/admin/my-profile', {
 		preserveScroll: true,
 		onSuccess: () => closeModal(),
 		onError: () => passwordInput.value.focus(),

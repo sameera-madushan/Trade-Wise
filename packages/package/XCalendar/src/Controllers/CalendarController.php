@@ -12,16 +12,15 @@ use Package\XCalendar\Requests\StoreTradesRequest;
 
 class CalendarController extends Controller
 {
-    public function index($uuid, $timestamp)
+    public function index($timestamp)
     {
 
         return Inertia::render('XCalendar/XDay/Index', [
-            'uuid' => $uuid,
             'timestamp' => $timestamp
         ]);
     }
 
-    public function store(StoreTradesRequest $request, $uuid, $timestamp)
+    public function store(StoreTradesRequest $request, $timestamp)
     {
 
         DB::beginTransaction();
@@ -65,7 +64,7 @@ class CalendarController extends Controller
         }
     }
 
-    public function getTrades($uuid, $timestamp)
+    public function getTrades($timestamp)
     {
         $trades = Trade::where('user_id', auth()->id())->where('timestamp', $timestamp)->get();
 
@@ -74,7 +73,7 @@ class CalendarController extends Controller
         ->make(true);
     }
 
-    public function deleteTrades($uuid, $timestamp, $id)
+    public function deleteTrades($timestamp, $id)
     {
         DB::beginTransaction();
 
@@ -91,7 +90,7 @@ class CalendarController extends Controller
 
             DB::commit();
 
-            return redirect("/user/$uuid/calendar/$timestamp")
+            return redirect("/user/calendar/$timestamp")
                 ->with('message', ['type' => 'success', 'message' => 'Trade deleted successfully'])
                 ->setStatusCode(303);
 
@@ -130,7 +129,7 @@ class CalendarController extends Controller
         return response()->json($events);
     }
 
-    public function saveNote($uuid, $timestamp, $id)
+    public function saveNote($timestamp, $id)
     {
         DB::beginTransaction();
 
@@ -167,7 +166,7 @@ class CalendarController extends Controller
     }
 
 
-    public function getNote($uuid, $timestamp, $id)
+    public function getNote($timestamp, $id)
     {
         $userId = auth()->id();
 

@@ -20,7 +20,7 @@ const openModal = async (tradeId) => {
     isLoadingNote.value = true;
 
     try {
-        const response = await axios.get(`/user/${props.uuid}/calendar/${props.timestamp}/${selectedTradeId.value}/get-note`);
+        const response = await axios.get(`/user/calendar/${props.timestamp}/${selectedTradeId.value}/get-note`);
         if (response.data.success) {
             quillData.value = response.data.data;
         }
@@ -52,14 +52,12 @@ const editRowId = ref(null)
 let dt
 
 const props = defineProps({
-  uuid: {
-    type: String,
-    default: null,
-  },
+
   timestamp: {
     type: String,
     default: null,
   }
+
 })
 
 if (Number(props.timestamp) === getCurrentDateTimestamp()) {
@@ -90,7 +88,6 @@ const submit = async () => {
 
     await form.post(
         route('calendar.store', {
-            uuid: props.uuid,
             timestamp: props.timestamp
         }),
         {
@@ -106,7 +103,7 @@ const submit = async () => {
 
 const saveNote = async (content) => {
   try {
-    await axios.post(`/user/${props.uuid}/calendar/${props.timestamp}/${selectedTradeId.value}/save-note`, { content });
+    await axios.post(`/user/calendar/${props.timestamp}/${selectedTradeId.value}/save-note`, { content });
   } catch (error) {
     console.error('Error saving note:', error);
   }
@@ -210,7 +207,7 @@ const options = {
 	responsive: true,
 	autoWidth: false,
 	ajax: {
-		url: `${$APP_URL}/user/${props.uuid}/calendar/${props.timestamp}/get-trades`,
+		url: `${$APP_URL}/user/calendar/${props.timestamp}/get-trades`,
 		type: 'POST',
 	},
 }
@@ -255,7 +252,7 @@ $(document).ready(() => {
         const tradeId = data.id;
 
 		if (confirm("Are you sure you want to delete this trade?")) {
-			axios.delete(`/user/${props.uuid}/calendar/${props.timestamp}/${tradeId}/delete-trade`)
+			axios.delete(`/user/calendar/${props.timestamp}/${tradeId}/delete-trade`)
 				.then(response => {
 					dt.ajax.reload(null, false);
 				})
@@ -277,7 +274,7 @@ onMounted(() => {
 <template>
 	<Head :title="formattedDate" />
 
-  <DashboardLayout :uuid="props.uuid">
+  <DashboardLayout>
     <NoteModal
       :visible="isModalVisible"
       :content="quillData"

@@ -8,10 +8,7 @@ const props = defineProps({
 		type: String,
 		default: null,
 	},
-  uuid: {
-    type: String,
-    default: null,
-  }
+  isUser: Boolean
 })
 
 const user = usePage().props.auth.user
@@ -20,6 +17,7 @@ const form = useForm({
 	name: user.name,
 	email: user.email,
 })
+
 </script>
 
 <template>
@@ -30,7 +28,7 @@ const form = useForm({
 			<small class="mt-1 text-gray-600">Update your account's profile information and email address.</small>
 		</header>
 
-		<form class="mt-4" @submit.prevent="form.patch(props.uuid ? `/user/${props.uuid}/my-profile` : '/admin/my-profile')">
+		<form class="mt-4" @submit.prevent="form.patch(props.isUser ? `/user/my-profile` : '/admin/my-profile')">
 			<div class="row mb-3">
 				<label for="name" class="col-sm-3 col-form-label">Name</label>
 				<div class="col-sm-9">

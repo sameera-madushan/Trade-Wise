@@ -1,13 +1,5 @@
 <script setup>
 import { Link } from '@inertiajs/vue3'
-import { defineProps } from 'vue'
-
-const props = defineProps({
-  uuid: {
-    type: String,
-    default: null,
-  }
-})
 
 </script>
 
@@ -29,7 +21,7 @@ const props = defineProps({
 							</div>
 						</a>
 						<div class="dropdown-menu dashboard-dropdown dropdown-menu-end mt-2 py-1">
-							<Link class="dropdown-item d-flex align-items-center" :href="`/user/${props.uuid}/my-profile`">
+							<Link class="dropdown-item d-flex align-items-center" :href="`/user/my-profile`">
 								<svg class="dropdown-icon text-gray-400 me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
 									<path
 										fill-rule="evenodd"

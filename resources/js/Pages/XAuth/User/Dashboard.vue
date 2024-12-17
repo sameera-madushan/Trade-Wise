@@ -1,5 +1,5 @@
 <script setup>
-import { getCurrentInstance as instance, defineProps, onMounted, ref  } from 'vue'
+import { getCurrentInstance as instance, onMounted, ref  } from 'vue'
 import DashboardLayout from '@/Layouts/User.vue'
 import { Head } from '@inertiajs/vue3'
 import Chart from 'chart.js/auto';
@@ -10,13 +10,6 @@ const { proxy } = instance()
 proxy.$appState.parentSelection = null
 proxy.$appState.elementName = 'Dashboard'
 
-const props = defineProps({
-  uuid: {
-    type: String,
-    default: null,
-  }
-})
-
 const yearlyChartData = ref({ labels: [], datasets: [] });
 const monthlyChartData = ref({ labels: [], datasets: [] });
 
@@ -24,8 +17,8 @@ onMounted(async () => {
   try {
 
     const [yearlyResponse, monthlyResponse] = await Promise.all([
-      axios.get(`/user/${props.uuid}/get-monthly-pnls`),
-      axios.get(`/user/${props.uuid}/get-daily-pnls`),
+      axios.get(`/user/get-monthly-pnls`),
+      axios.get(`/user/get-daily-pnls`),
     ]);
 
     yearlyChartData.value = {
@@ -113,7 +106,7 @@ onMounted(async () => {
 <template>
 	<Head title="Dashboard" />
 
-  <DashboardLayout :uuid="props.uuid">
+  <DashboardLayout>
     <div class="row mt-4 mb-4">
       <div class="col-12 col-md-6">
         <div class="card border-0 shadow components-section">

@@ -38,10 +38,7 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        $uuid = (string) Str::uuid();
-
         $user = User::create([
-            'uuid' => $uuid,
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),

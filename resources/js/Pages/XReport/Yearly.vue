@@ -1,5 +1,5 @@
 <script setup>
-import { getCurrentInstance as instance, defineProps, ref, watch, onMounted, nextTick } from 'vue';
+import { getCurrentInstance as instance, ref, watch, onMounted, nextTick } from 'vue';
 import DashboardLayout from '@/Layouts/User.vue';
 import { Head } from '@inertiajs/vue3';
 import Chart from 'chart.js/auto';
@@ -15,13 +15,6 @@ const tableRef = ref(null);
 let dataTable = null;
 const chartRef = ref(null);
 let donutChart = null;
-
-const props = defineProps({
-  uuid: {
-    type: String,
-    default: null,
-  },
-});
 
 const options = {
   ordering: true,
@@ -79,7 +72,7 @@ const columns = [
 onMounted(async () => {
   await nextTick();
   const formattedYear = `${year.value}`;
-  options.ajax.url = `${$APP_URL}/user/${props.uuid}/report/get-yearly-report-data/${formattedYear}`;
+  options.ajax.url = `${$APP_URL}/user/report/get-yearly-report-data/${formattedYear}`;
 
   dataTable = $(tableRef.value).DataTable({
     ...options,
@@ -153,7 +146,7 @@ watch(year, async (newYear) => {
   if (dataTable) {
     await nextTick();
     const formattedYear = `${newYear}`;
-    const newUrl = `${$APP_URL}/user/${props.uuid}/report/get-yearly-report-data/${formattedYear}`;
+    const newUrl = `${$APP_URL}/user/report/get-yearly-report-data/${formattedYear}`;
     dataTable.ajax.url(newUrl).load();
   }
 });
@@ -163,7 +156,7 @@ watch(year, async (newYear) => {
 <template>
   <Head title="Monthly PnL Report" />
 
-  <DashboardLayout :uuid="props.uuid">
+  <DashboardLayout>
     <div class="row mt-4 mb-4">
       <div class="col-12 col-xl-12">
         <div class="card border-0 shadow components-section">

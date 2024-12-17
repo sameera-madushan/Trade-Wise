@@ -22,10 +22,12 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): Response
     {
+        $user = $request->user();
+
         return Inertia::render('XAuth/Profile/Edit', [
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
             'status' => session('status'),
-            'uuid' => $request->user()->uuid ?? null,
+            'isUser' => $user->hasRole('USER')
         ]);
     }
 
@@ -43,7 +45,7 @@ class ProfileController extends Controller
         $request->user()->save();
 
         if ($request->user()->hasRole('USER')) {
-            return Redirect::to('/user/' . $request->user()->uuid . '/my-profile');
+            return Redirect::to('/user/my-profile');
         }
 
         return Redirect::to('/admin/my-profile');

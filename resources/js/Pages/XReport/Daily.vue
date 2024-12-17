@@ -1,5 +1,5 @@
 <script setup>
-import { getCurrentInstance as instance, defineProps, ref, watch, onMounted, nextTick } from 'vue';
+import { getCurrentInstance as instance, ref, watch, onMounted, nextTick } from 'vue';
 import DashboardLayout from '@/Layouts/User.vue';
 import { Head } from '@inertiajs/vue3';
 import { format } from 'date-fns';
@@ -16,13 +16,6 @@ const chartRef = ref(null);
 let donutChart = null;
 let dataTable = null;
 
-const props = defineProps({
-  uuid: {
-    type: String,
-    default: null,
-  },
-});
-
 const options = {
   ordering: true,
   order: [[0, 'desc']],
@@ -31,7 +24,7 @@ const options = {
   responsive: true,
   autoWidth: false,
   ajax: {
-    url: `${$APP_URL}/user/${props.uuid}/report/get-daily-report-data/${format(date.value, 'yyyy-MM-dd')}`,
+    url: `${$APP_URL}/user/report/get-daily-report-data/${format(date.value, 'yyyy-MM-dd')}`,
     type: 'GET',
     dataSrc: (json) => {
 
@@ -151,7 +144,7 @@ watch(date, async (newDate) => {
   if (dataTable) {
     await nextTick();
     dataTable.ajax.url(
-      `${$APP_URL}/user/${props.uuid}/report/get-daily-report-data/${format(newDate, 'yyyy-MM-dd')}`
+      `${$APP_URL}/user/report/get-daily-report-data/${format(newDate, 'yyyy-MM-dd')}`
     ).load();
   }
 });
@@ -160,7 +153,7 @@ watch(date, async (newDate) => {
 <template>
   <Head title="Daily PnL Report" />
 
-  <DashboardLayout :uuid="props.uuid">
+  <DashboardLayout>
     <div class="row mt-4 mb-4">
       <div class="col-12 col-xl-12">
         <div class="card border-0 shadow components-section">
