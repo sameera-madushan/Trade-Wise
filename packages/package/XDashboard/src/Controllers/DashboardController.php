@@ -19,19 +19,18 @@ class DashboardController extends Controller
     {
         $currentYear = now()->year;
 
-        $monthlyPnL = DB::table('trades')
+        $monthlyPnL = DB::connection('sqlite_user')
+            ->table('trades')
             ->selectRaw('
-                MONTH(FROM_UNIXTIME(timestamp / 1000)) as month,
+                strftime(\'%Y-%m\', datetime(timestamp / 1000, \'unixepoch\')) as month_year,
                 SUM(pnl) as total_pnl,
                 SUM(CASE WHEN pnl >= 0 THEN pnl ELSE 0 END) as total_profit,
                 SUM(CASE WHEN pnl < 0 THEN pnl ELSE 0 END) as total_loss
             ')
             ->whereNull('deleted_at')
-            ->whereRaw('YEAR(FROM_UNIXTIME(timestamp / 1000)) = ?', [$currentYear])
-            ->groupByRaw('MONTH(FROM_UNIXTIME(timestamp / 1000))')
-            ->orderBy('month', 'asc')
-            ->get()
-            ->keyBy('month');
+            ->groupByRaw('strftime(\'%Y-%m\', datetime(timestamp / 1000, \'unixepoch\'))')
+            ->orderBy('month_year', 'asc')
+            ->get();
 
         $monthNames = [
             1 => 'January', 2 => 'February', 3 => 'March', 4 => 'April',
@@ -39,10 +38,16 @@ class DashboardController extends Controller
             9 => 'September', 10 => 'October', 11 => 'November', 12 => 'December'
         ];
 
+        $monthlyPnLData = $monthlyPnL->keyBy('month_year');
+
         $fullData = [];
         for ($month = 1; $month <= 12; $month++) {
-            $totalProfit = $monthlyPnL[$month]->total_profit ?? 0;
-            $totalLoss = $monthlyPnL[$month]->total_loss ?? 0;
+            $monthKey = $currentYear . '-' . str_pad($month, 2, '0', STR_PAD_LEFT);
+
+            $dataForMonth = $monthlyPnLData->get($monthKey);
+
+            $totalProfit = $dataForMonth->total_profit ?? 0;
+            $totalLoss = $dataForMonth->total_loss ?? 0;
 
             $fullData[] = [
                 'year' => $currentYear,
@@ -61,24 +66,27 @@ class DashboardController extends Controller
         return response()->json($chartData);
     }
 
+
+
     public function getDailyPnL()
     {
         $currentMonth = now()->month;
         $currentYear = now()->year;
 
-        $dailyPnL = DB::table('trades')
-            ->selectRaw('
-                DAY(FROM_UNIXTIME(timestamp / 1000)) as day,
-                SUM(CASE WHEN pnl >= 0 THEN pnl ELSE 0 END) as total_profit,
-                SUM(CASE WHEN pnl < 0 THEN pnl ELSE 0 END) as total_loss
-            ')
-            ->whereNull('deleted_at')
-            ->whereRaw('MONTH(FROM_UNIXTIME(timestamp / 1000)) = ?', [$currentMonth])
-            ->whereRaw('YEAR(FROM_UNIXTIME(timestamp / 1000)) = ?', [$currentYear])
-            ->groupByRaw('DAY(FROM_UNIXTIME(timestamp / 1000))')
-            ->orderBy('day', 'asc')
-            ->get()
-            ->keyBy('day');
+        $dailyPnL = DB::connection('sqlite_user')
+        ->table('trades')
+        ->selectRaw('
+            CAST(strftime(\'%d\', datetime(timestamp / 1000, \'unixepoch\')) AS INTEGER) as day,
+            SUM(CASE WHEN pnl >= 0 THEN pnl ELSE 0 END) as total_profit,
+            SUM(CASE WHEN pnl < 0 THEN pnl ELSE 0 END) as total_loss
+        ')
+        ->whereNull('deleted_at')
+        ->whereRaw('CAST(strftime(\'%m\', datetime(timestamp / 1000, \'unixepoch\')) AS INTEGER) = ?', [$currentMonth])
+        ->whereRaw('CAST(strftime(\'%Y\', datetime(timestamp / 1000, \'unixepoch\')) AS INTEGER) = ?', [$currentYear])
+        ->groupByRaw('CAST(strftime(\'%d\', datetime(timestamp / 1000, \'unixepoch\')) AS INTEGER)')
+        ->orderBy('day', 'asc')
+        ->get()
+        ->keyBy('day');
 
         $fullData = [];
         for ($day = 1; $day <= now()->daysInMonth; $day++) {

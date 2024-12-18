@@ -103,12 +103,13 @@ class CalendarController extends Controller
     public function getPnlsForCalendar()
     {
         // Calculate daily PnL
-        $dailyPnls = DB::table('trades')
-            ->selectRaw('DATE(FROM_UNIXTIME(timestamp / 1000)) as trade_date, SUM(pnl) as total_pnl')
-            ->whereNull('deleted_at')
-            ->groupBy('trade_date')
-            ->orderBy('trade_date', 'asc')
-            ->get();
+        $dailyPnls = DB::connection('sqlite_user')
+        ->table('trades')
+        ->selectRaw('DATE(datetime(timestamp / 1000, "unixepoch")) as trade_date, SUM(pnl) as total_pnl')
+        ->whereNull('deleted_at')
+        ->groupBy('trade_date')
+        ->orderBy('trade_date', 'asc')
+        ->get();
 
         $events = $dailyPnls->map(function ($pnl) {
             return [
