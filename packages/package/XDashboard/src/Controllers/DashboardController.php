@@ -49,18 +49,19 @@ class DashboardController extends Controller
             $totalProfit = $dataForMonth->total_profit ?? 0;
             $totalLoss = $dataForMonth->total_loss ?? 0;
 
+            $netPnL = $totalProfit + $totalLoss;
+
             $fullData[] = [
                 'year' => $currentYear,
                 'month' => $month,
-                'total_profit' => $totalProfit,
-                'total_loss' => $totalLoss,
+                'net_pnl' => $netPnL,
             ];
+
         }
 
         $chartData = [
             'labels' => collect($fullData)->map(fn($row) => $monthNames[$row['month']] . ' ' . $row['year']),
-            'profits' => collect($fullData)->pluck('total_profit'),
-            'losses' => collect($fullData)->pluck('total_loss'),
+            'net_pnl' => collect($fullData)->pluck('net_pnl'),
         ];
 
         return response()->json($chartData);
@@ -88,23 +89,37 @@ class DashboardController extends Controller
         ->get()
         ->keyBy('day');
 
+
         $fullData = [];
         for ($day = 1; $day <= now()->daysInMonth; $day++) {
             $fullData[] = [
                 'day' => $day,
-                'total_profit' => $dailyPnL[$day]->total_profit ?? 0,
-                'total_loss' => $dailyPnL[$day]->total_loss ?? 0,
+                'net_pnl' => $dailyPnL[$day]->net_pnl ?? 0,
             ];
         }
 
         $chartData = [
             'labels' => collect($fullData)->pluck('day'),
-            'profits' => collect($fullData)->pluck('total_profit'),
-            'losses' => collect($fullData)->pluck('total_loss'),
+            'net_pnl' => collect($fullData)->pluck('net_pnl'),
         ];
 
         return response()->json($chartData);
     }
 
+    public function getTodayTrades()
+    {
+        $todayStart = now()->startOfDay()->timestamp * 1000;
+        $todayEnd = now()->endOfDay()->timestamp * 1000;
+
+        $todayTrades = DB::connection('sqlite_user')
+        ->table('trades')
+        ->whereBetween('timestamp', [$todayStart, $todayEnd])
+        ->whereNull('deleted_at')
+        ->orderBy('timestamp', 'asc')
+        ->get(['curruncy_pair', 'pnl']);
+
+
+        return response()->json($todayTrades);
+    }
 
 }

@@ -11,6 +11,7 @@ Route::group(['middleware' => ['web', 'auth', 'user']], function () {
         Route::get('/', [DashboardController::class, 'index'])->name('index.dashboard');
         Route::get('/get-monthly-pnls', [DashboardController::class, 'getMonthlyPnL'])->name('get.monthly.pnls');
         Route::get('/get-daily-pnls', [DashboardController::class, 'getDailyPnL'])->name('get.daily.pnls');
+        Route::get('/get-today-trades', [DashboardController::class, 'getTodayTrades'])->name('get.today.trades');
     });
 
 });
