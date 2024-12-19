@@ -33,6 +33,12 @@ const menu = ref([
     route: `/user/calendar`
 	},
 	{
+		name: 'Limits',
+		label: 'Limits',
+		icon: 'lock',
+    route: `/user/limits`
+	},
+	{
 		name: 'Reports',
 		label: 'Reports',
 		icon: 'bar_chart',
