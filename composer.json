@@ -37,7 +37,8 @@
 			"Package\\XAuth\\": "packages/Package/XAuth/src",
 			"Package\\XCalendar\\": "packages/Package/XCalendar/src",
 			"Package\\XDashboard\\": "packages/Package/XDashboard/src",
-			"Package\\XReport\\": "packages/Package/XReport/src"
+			"Package\\XReport\\": "packages/Package/XReport/src",
+			"Package\\XLimit\\": "packages/Package/XLimit/src"
 		},
 		"files": [
 			"app/Http/Helpers.php",

@@ -163,6 +163,7 @@ return [
         \Package\XCalendar\XCalendarServiceProvider::class,
         \Package\XDashboard\XDashboardServiceProvider::class,
         \Package\XReport\XReportServiceProvider::class,
+        \Package\XLimit\XLimitServiceProvider::class,
 
         /*
          * Application Service Providers...
