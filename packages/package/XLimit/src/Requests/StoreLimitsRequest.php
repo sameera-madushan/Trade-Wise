@@ -22,7 +22,7 @@ class StoreLimitsRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'date' => 'required|date|unique:sqlite_user.trade_limits,date',
+            'date' => 'required|date|after_or_equal:today|unique:sqlite_user.trade_limits,date',
             'limit' => 'required|numeric',
         ];
     }

@@ -2,14 +2,22 @@
 
 namespace Package\XLimit\Controllers;
 
+use Inertia\Inertia;
 use Illuminate\Support\Facades\DB;
+use Package\XCalendar\Models\Trade;
 use App\Http\Controllers\Controller;
 use Package\XLimit\Models\TradeLimit;
-use Yajra\DataTables\Facades\DataTables;
 use Package\XLimit\Requests\StoreLimitsRequest;
 
 class LimitController extends Controller
 {
+
+    public function index()
+    {
+
+        return Inertia::render('XLimit/Index');
+    }
+
     public function store(StoreLimitsRequest $request)
     {
         DB::beginTransaction();
@@ -35,8 +43,27 @@ class LimitController extends Controller
     {
         $limits = TradeLimit::all();
 
-        return DataTables::of($limits)
-        ->rawColumns(['actions'])
-        ->make(true);
+        $result = [];
+
+        foreach ($limits as $limit) {
+
+            $timestamp = getTimestampFromDate($limit->date);
+
+            $totalBuyPrice = Trade::where('timestamp', $timestamp)
+                ->sum('buy_price');
+
+            $percentageUsed = $limit->limit > 0 ? ($totalBuyPrice / $limit->limit) * 100 : 0;
+
+            $result[] = [
+                'timestamp' => $timestamp,
+                'limit_date' => $limit->date,
+                'limit_amount' => $limit->limit,
+                'total_buy_price' => $totalBuyPrice,
+                'percentage_used' => round($percentageUsed, 2)
+            ];
+        }
+
+        return response()->json($result);
     }
+
 }

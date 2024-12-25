@@ -29,6 +29,15 @@ class CalendarController extends Controller
             $validatedData = $request->validated();
             $validatedData['timestamp'] = $timestamp;
 
+            $newTradeBuyPrice = $validatedData['buy_price'] ?? 0;
+
+            $limitCheck = Trade::isLimitExceeded($timestamp, $newTradeBuyPrice);
+
+            if ($limitCheck) {
+                DB::rollBack();
+                return redirect()->back()->with('message', ['type' => 'error', 'message' => $limitCheck]);
+            }
+
             if (!empty($validatedData['editing']) && !empty($validatedData['rowId'])) {
 
                 $trade = Trade::find($validatedData['rowId']);
