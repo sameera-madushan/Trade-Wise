@@ -72,12 +72,12 @@ onMounted(async () => {
       datasets: [
         {
           label: "Net PnL",
-          data: yearlyResponse.data.net_pnl,
+          data: monthlyResponse.data.net_pnl,
           borderWidth: 1,
           borderColor: yearlyResponse.data.net_pnl.map((value) =>
             value >= 0 ? 'rgb(75, 192, 192)' : 'rgb(255, 99, 132)'
           ),
-          backgroundColor: generateColors(yearlyResponse.data.net_pnl),
+          backgroundColor: generateColors(monthlyResponse.data.net_pnl),
         },
       ],
     };

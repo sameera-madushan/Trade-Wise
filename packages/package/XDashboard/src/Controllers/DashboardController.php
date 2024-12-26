@@ -89,12 +89,17 @@ class DashboardController extends Controller
         ->get()
         ->keyBy('day');
 
-
         $fullData = [];
         for ($day = 1; $day <= now()->daysInMonth; $day++) {
+            $netPnL = 0;
+
+            if (isset($dailyPnL[$day])) {
+                $netPnL = $dailyPnL[$day]->total_profit + $dailyPnL[$day]->total_loss;
+            }
+
             $fullData[] = [
                 'day' => $day,
-                'net_pnl' => $dailyPnL[$day]->net_pnl ?? 0,
+                'net_pnl' => $netPnL,
             ];
         }
 

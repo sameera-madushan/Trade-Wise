@@ -27,8 +27,6 @@ const renderLockOpenIcon = (info) => {
     const iconType = limitForDate.percentage_used === 100 ? 'lock' : 'lock_open';
     const icon = createIcon(iconType);
     positionIcon(info.el, icon);
-  } else {
-    console.log('No limit found for this date:', currentDate);
   }
 };
 
