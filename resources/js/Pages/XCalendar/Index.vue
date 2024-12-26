@@ -16,12 +16,15 @@ proxy.$appState.elementName = 'Calander'
 
 const events = ref([])
 const limits = ref([])
+const isLoading = ref(true)
 
 const renderLockOpenIcon = (info) => {
   const currentDate = info.date.toLocaleDateString('en-CA');
   const limitForDate = findLimitForDate(currentDate);
 
   info.el.style.cursor = 'pointer';
+
+  if (limits.value.length === 0) return;
 
   if (limitForDate) {
     const iconType = limitForDate.percentage_used === 100 ? 'lock' : 'lock_open';
@@ -79,6 +82,8 @@ async function getLimits() {
     limits.value = response.data
   } catch (error) {
     console.error('Failed to fetch limits:', error)
+  } finally {
+    isLoading.value = false
   }
 }
 
@@ -103,7 +108,7 @@ onMounted(() => {
       <div class="col-12 col-xl-12">
         <div class="card border-0 shadow components-section">
           <div class="card-body">
-            <FullCalendar v-if="limits.length > 0" :options="calendarOptions" />
+            <FullCalendar v-if="!isLoading" :options="calendarOptions" />
               <div v-else class="spinner">
                 <div class="loading-spinner"></div>
               </div>
