@@ -120,7 +120,7 @@ const options = {
                         <th>Date</th>
                         <th>Limit Amount</th>
                         <th>Amount Used</th>
-                        <th>Percentage Used</th>
+                        <th>Percentage</th>
                       </tr>
                     </thead>
                     <tbody></tbody>
