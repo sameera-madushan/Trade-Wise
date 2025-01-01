@@ -8,6 +8,8 @@ import { format } from 'date-fns';
 import axios from 'axios';
 
 const { proxy } = instance()
+const table = ref()
+let dt
 
 proxy.$appState.parentSelection = null
 proxy.$appState.elementName = 'Limits'
@@ -28,27 +30,8 @@ const submit = async () => {
   fetchLimits();
 };
 
-const fetchLimits = async () => {
-  try {
-    const response = await axios.get('/user/limits/get-limits');
-    limits.value = response.data;
-  } catch (error) {
-    console.error('Error fetching limits:', error);
-  }
-};
-
 const formatDate = (dateString, formatPattern) => {
   return format(new Date(dateString), formatPattern);
-};
-
-const getProgressBarClass = (percentage) => {
-  if (percentage === 100) {
-    return 'bg-danger';
-  } else if (percentage > 50) {
-    return 'bg-warning';
-  } else {
-    return 'bg-success';
-  }
 };
 
 const disablePastDates = (date) => {
@@ -57,9 +40,36 @@ const disablePastDates = (date) => {
   return date < today;
 };
 
-onMounted(() => {
-  fetchLimits();
-});
+
+const columns = [
+	{ data: 'timestamp', visible: false, searchable: false },
+	{ data: 'limit_date' },
+	{ data: 'limit_amount' },
+	{ data: 'total_buy_price' },
+  {
+    data: 'percentage_used',
+    render: function (data) {
+        return data + '%';
+    }
+  }
+]
+
+const options = {
+	ordering: true,
+	order: [[0, 'desc']],
+	processing: true,
+	serverSide: true,
+	responsive: true,
+	autoWidth: false,
+  ajax: {
+    url: `${$APP_URL}/user/limits/get-limits`,
+    type: 'GET',
+    data: function (d) {
+      d.forDataTable = true;
+    },
+  },
+}
+
 </script>
 
 <template>
@@ -91,36 +101,35 @@ onMounted(() => {
           </div>
         </div>
       </div>
-      <div class="row mt-4 mb-4">
-        <div class="col-12 col-xl-12">
-          <div class="card border-0 shadow components-section">
-            <div class="card-body">
-              <div v-for="(limit, index) in limits" :key="index" class="row align-items-center mb-3">
-                <div class="col-6">
-                  <div class="calendar d-flex">
-                    <span class="calendar-month"> {{ formatDate(limit.limit_date, 'yyyy') }} {{ formatDate(limit.limit_date, 'MMM') }}</span>
-                    <span class="calendar-day py-2">{{ formatDate(limit.limit_date, 'dd') }}</span>
-                  </div>
-                </div>
-                <div class="col-6">
-                  <div class="progress-wrapper">
-                    <div class="progress-info">
-                      <div class="h6 mb-0">
-                        ${{ limit.limit_amount }}
-                      </div>
-                      <div class="small fw-bold text-gray-500">
-                        <span>{{ limit.percentage_used }} %</span>
-                      </div>
-                    </div>
-                    <div class="progress mb-0">
-                      <div :class="getProgressBarClass(limit.percentage_used)" role="progressbar" aria-valuenow="limit.percentage_used" aria-valuemin="0" aria-valuemax="100" :style="{ width: `${limit.percentage_used}%` }"></div>
-                    </div>
-                  </div>
+      <div class="col-12 mt-4">
+					<div class="card border-0 shadow components-section">
+						<div class="card-body">
+              <div class="flexible-table">
+                <div class="py-4">
+                  <DataTables
+                    id="limits-table"
+                    ref="table"
+                    :options="options"
+                    :columns="columns"
+                    class="table table-hover table-text-middle pt-4"
+                    width="100%"
+                  >
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>Date</th>
+                        <th>Limit Amount</th>
+                        <th>Amount Used</th>
+                        <th>Percentage Used</th>
+                      </tr>
+                    </thead>
+                    <tbody></tbody>
+                    <tfoot></tfoot>
+                  </DataTables>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
+						</div>
+					</div>
+				</div>
     </DashboardLayout>
 </template>

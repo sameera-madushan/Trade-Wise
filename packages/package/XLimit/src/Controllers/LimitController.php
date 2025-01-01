@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\DB;
 use Package\XCalendar\Models\Trade;
 use App\Http\Controllers\Controller;
 use Package\XLimit\Models\TradeLimit;
+use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 use Package\XLimit\Requests\StoreLimitsRequest;
 
 class LimitController extends Controller
@@ -39,8 +41,10 @@ class LimitController extends Controller
         }
     }
 
-    public function getLimits()
+    public function getLimits(Request $request)
     {
+        $forDataTable = $request->get('forDataTable', false);
+
         $limits = TradeLimit::all();
 
         $result = [];
@@ -61,6 +65,10 @@ class LimitController extends Controller
                 'total_buy_price' => $totalBuyPrice,
                 'percentage_used' => round($percentageUsed, 2)
             ];
+        }
+
+        if ($forDataTable) {
+            return DataTables::of($result)->make(true);
         }
 
         return response()->json($result);
