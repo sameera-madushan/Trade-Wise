@@ -14,7 +14,7 @@ import { SimpleBar } from 'simplebar-vue3'
 import DataTables from 'datatables.net-vue3'
 import DataTablesLib from 'datatables.net-bs5'
 
-const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'DAVID PIERIS AVIATION'
+const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'TRADE WISE'
 
 createInertiaApp({
 	title: (title) => `${title} - ${appName}`,

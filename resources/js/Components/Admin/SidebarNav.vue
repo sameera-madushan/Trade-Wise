@@ -14,7 +14,6 @@ const menu = ref([
 		icon: 'settings',
 		gates: ['MANAGE_SETTING'],
 		items: [
-			{ name: 'Configurations', label: 'Configurations', route: '/admin/settings/configurations', gates: ['MANAGE_CONFIGURATION'] },
 			{ name: 'Permissions', label: 'Permissions', route: '/admin/settings/permissions', gates: ['MANAGE_PERMISSIONS'] },
 			{ name: 'Roles', label: 'Roles', route: '/admin/settings/roles', gates: ['MANAGE_ROLES'] },
 			{ name: 'Users', label: 'Users', route: '/admin/settings/users', gates: ['MANAGE_USERS'] },

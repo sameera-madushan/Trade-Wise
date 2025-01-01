@@ -91,35 +91,6 @@ body {
 	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.btn {
-	display: inline-block;
-	padding: 12px 24px;
-	font-size: 14px;
-	font-weight: 600;
-	text-align: center;
-	text-decoration: none;
-	border-radius: 30px;
-	transition: all 0.3s ease;
-	cursor: pointer;
-}
-
-.btn-primary {
-	background: linear-gradient(45deg, #1e90ff, #00bfff);
-	color: white;
-	border: none;
-}
-
-.btn-secondary {
-	background: linear-gradient(45deg, #ff6f61, #ff9966);
-	color: white;
-	border: none;
-}
-
-.btn:hover {
-	transform: translateY(-2px);
-	box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-}
-
 .dashboard-link {
 	font-weight: 700;
 	color: #0056b3;
@@ -131,20 +102,4 @@ body {
 	text-decoration: none;
 }
 
-/* Animation for SVG */
-.svg-animate {
-	animation: float 3s ease-in-out infinite;
-}
-
-@keyframes float {
-	0% {
-		transform: translateY(0);
-	}
-	50% {
-		transform: translateY(-10px);
-	}
-	100% {
-		transform: translateY(0);
-	}
-}
 </style>
