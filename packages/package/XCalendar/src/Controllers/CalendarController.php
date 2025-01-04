@@ -75,7 +75,21 @@ class CalendarController extends Controller
         $trades = Trade::where('timestamp', $timestamp)->get();
 
         return DataTables::of($trades)
-        ->rawColumns(['actions'])
+        ->addColumn('pnl_percentage', function ($trade) {
+            if ($trade->buy_price != 0) {
+                $percentage = round(($trade->pnl / $trade->buy_price) * 100, 2);
+
+                $formattedPercentage = abs($percentage);
+
+                if ($percentage < 0) {
+                    return '<span style="color: #e11d48;">' . $formattedPercentage . '%</span>';
+                } else {
+                    return '<span style="color: #10b981;">' . $formattedPercentage . '%</span>';
+                }
+            }
+            return 'N/A';
+        })
+        ->rawColumns(['actions', 'pnl_percentage'])
         ->make(true);
     }
 

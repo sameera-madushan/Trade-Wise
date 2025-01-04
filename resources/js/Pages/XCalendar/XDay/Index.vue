@@ -180,6 +180,7 @@ const columns = [
         return `<span class="${colorClass}">${pnlValue}</span>`;
     }
   },
+  { data: 'pnl_percentage' },
   {
     data: 'action',
     searchable: false,
@@ -363,6 +364,7 @@ onMounted(() => {
                         <th>Sell Value</th>
                         <th>Sell Price</th>
                         <th>P and L</th>
+                        <th>Percentage</th>
                         <th>Actions</th>
                       </tr>
                     </thead>
