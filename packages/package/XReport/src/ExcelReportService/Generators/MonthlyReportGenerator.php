@@ -1,9 +1,10 @@
 <?php
 
-namespace Package\XReport\Services;
+namespace Package\XReport\ExcelReportService\Generators;
 
 use Carbon\Carbon;
 use Package\XCalendar\Models\Trade;
+use Package\XReport\ExcelReportService\ReportGeneratorInterface;
 
 class MonthlyReportGenerator implements ReportGeneratorInterface
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Package\XReport\Services;
+namespace Package\XReport\ExcelReportService;
 
 interface ReportGeneratorInterface
 {

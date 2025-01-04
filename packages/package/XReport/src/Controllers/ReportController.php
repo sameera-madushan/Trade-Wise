@@ -9,11 +9,11 @@ use Package\XCalendar\Models\Trade;
 use App\Http\Controllers\Controller;
 use Rap2hpoutre\FastExcel\FastExcel;
 use Yajra\DataTables\Facades\DataTables;
-use Package\XReport\Services\ReportContext;
-use Package\XReport\Services\DailyReportGenerator;
-use Package\XReport\Services\YearlyReportGenerator;
-use Package\XReport\Services\MonthlyReportGenerator;
+use Package\XReport\ExcelReportService\ReportContext;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use Package\XReport\ExcelReportService\Generators\DailyReportGenerator;
+use Package\XReport\ExcelReportService\Generators\YearlyReportGenerator;
+use Package\XReport\ExcelReportService\Generators\MonthlyReportGenerator;
 
 class ReportController extends Controller
 {
