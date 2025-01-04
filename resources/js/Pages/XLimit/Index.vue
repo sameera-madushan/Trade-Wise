@@ -14,21 +14,29 @@ let dt
 proxy.$appState.parentSelection = null
 proxy.$appState.elementName = 'Limits'
 
-const limits = ref([]);
-
 const form = useValidatedForm({
   date: [new Date(), [isRequired()]],
   limit: ["", [isRequired(), isNumeric()]],
 });
 
 const submit = async () => {
+  try {
+    const formattedDate = format(new Date(form.date), 'yyyy-MM-dd');
+    form.date = formattedDate;
 
-  const formattedDate = format(new Date(form.date), 'yyyy-MM-dd');
-  form.date = formattedDate;
-
-  await form.post(route('limit.store'));
-  fetchLimits();
+    await form.post(route('limit.store'), {
+      onSuccess: () => {
+        form.limit = '';
+        if (dt) {
+          dt.ajax.reload(null, false);
+        }
+      },
+    });
+  } catch (error) {
+    console.error("An error occurred during form submission:", error);
+  }
 };
+
 
 const formatDate = (dateString, formatPattern) => {
   return format(new Date(dateString), formatPattern);
@@ -69,6 +77,10 @@ const options = {
     },
   },
 }
+
+onMounted(() => {
+	dt = table.value.dt
+})
 
 </script>
 
