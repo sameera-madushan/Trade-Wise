@@ -136,7 +136,7 @@ class CalendarController extends Controller
 
         $events = $dailyPnls->map(function ($pnl) {
             return [
-                'title' => 'P&L: ' . number_format($pnl->total_pnl, 2),
+                'title' => number_format($pnl->total_pnl, 2),
                 'start' => $pnl->trade_date,
                 'allDay' => true,
                 'color' => $pnl->total_pnl >= 0 ? 'green' : 'red',

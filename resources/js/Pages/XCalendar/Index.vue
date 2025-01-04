@@ -153,5 +153,15 @@ onMounted(() => {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+</style>
 
+<style>
+.fc-event-title-container {
+  text-align: center;
+}
+
+.fc-daygrid-event-harness {
+  margin-left: 10px;
+  margin-right: 10px;
+}
 </style>
