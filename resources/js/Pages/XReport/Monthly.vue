@@ -3,6 +3,7 @@ import { getCurrentInstance as instance, ref, watch, onMounted, nextTick } from 
 import DashboardLayout from '@/Layouts/User.vue';
 import { Head } from '@inertiajs/vue3';
 import Chart from 'chart.js/auto';
+import axios from 'axios';
 
 const { proxy } = instance();
 
@@ -145,6 +146,40 @@ onMounted(async () => {
     });
 });
 
+const downloadExcel = async () => {
+  try {
+    const formattedMonthYear = `${month.value.year}-${String(month.value.month + 1).padStart(2, '0')}`;
+    const response = await axios.post(
+      `${$APP_URL}/user/report/generate-report`,
+      {
+        date: formattedMonthYear,
+        type: 'monthly',
+      },
+      {
+        responseType: 'blob',
+      }
+    );
+
+    // Create a link to download the file
+    const url = window.URL.createObjectURL(new Blob([response.data]));
+    const link = document.createElement('a');
+    link.href = url;
+
+    const contentDisposition = response.headers['content-disposition'];
+    const filename = contentDisposition
+      ? contentDisposition.split('filename=')[1].replace(/"/g, '')
+      : 'report.xlsx';
+
+    link.setAttribute('download', filename);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  } catch (error) {
+    console.error('Error downloading report:', error);
+  }
+};
+
+
 watch(month, async (newMonth) => {
   if (dataTable) {
     await nextTick();
@@ -161,6 +196,9 @@ watch(month, async (newMonth) => {
   <DashboardLayout>
     <div class="row mt-4 mb-4">
       <div class="col-12 col-xl-12">
+        <div class="d-flex justify-content-end mb-2">
+          <button class="btn btn-primary" @click="downloadExcel">Download Excel</button>
+        </div>
         <div class="card border-0 shadow components-section">
           <div class="card-body">
             <div class="row align-items-center">

@@ -4,10 +4,16 @@ namespace Package\XReport\Controllers;
 
 use Carbon\Carbon;
 use Inertia\Inertia;
+use Illuminate\Http\Request;
 use Package\XCalendar\Models\Trade;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Request;
+use Rap2hpoutre\FastExcel\FastExcel;
 use Yajra\DataTables\Facades\DataTables;
+use Package\XReport\Services\ReportContext;
+use Package\XReport\Services\DailyReportGenerator;
+use Package\XReport\Services\YearlyReportGenerator;
+use Package\XReport\Services\MonthlyReportGenerator;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ReportController extends Controller
 {
@@ -62,5 +68,42 @@ class ReportController extends Controller
             ->make(true);
     }
 
+    public function exportReport(Request $request)
+    {
+
+        $type = $request->input('type');
+        $date = $request->input('date');
+
+        $context = new ReportContext();
+
+        switch ($type) {
+            case 'yearly':
+                $context->setReportGenerator(new YearlyReportGenerator());
+                break;
+            case 'monthly':
+                $context->setReportGenerator(new MonthlyReportGenerator());
+                break;
+            default:
+                $context->setReportGenerator(new DailyReportGenerator());
+                break;
+        }
+
+        $filters = ['date' => $date];
+
+        $data = $context->generateReport($filters);
+
+        $dataArray = $data->toArray();
+
+        $filename = $type . '_report_' . $date . '.xlsx';
+
+        // Create a StreamedResponse for downloading the file
+        return new StreamedResponse(function () use ($dataArray) {
+            (new FastExcel($dataArray))->export('php://output');
+        }, 200, [
+            'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+        ]);
+
+    }
 
 }
