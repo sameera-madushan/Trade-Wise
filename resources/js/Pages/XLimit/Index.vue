@@ -1,11 +1,13 @@
 <script setup>
-import { getCurrentInstance as instance, ref, watch, onMounted, nextTick } from 'vue';
+import { getCurrentInstance as instance, ref, onMounted } from 'vue';
 import DashboardLayout from '@/Layouts/User.vue';
 import { Head } from '@inertiajs/vue3';
 import { isRequired, isNumeric } from 'intus/rules';
 import { useValidatedForm } from '@/Composables';
 import { format } from 'date-fns';
 import axios from 'axios';
+import Swal from 'sweetalert2'
+import { toast } from '@/stores'
 
 const { proxy } = instance()
 const table = ref()
@@ -37,20 +39,14 @@ const submit = async () => {
   }
 };
 
-
-const formatDate = (dateString, formatPattern) => {
-  return format(new Date(dateString), formatPattern);
-};
-
 const disablePastDates = (date) => {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   return date < today;
 };
 
-
 const columns = [
-	{ data: 'timestamp', visible: false, searchable: false },
+	{ data: 'id', visible: false, searchable: false },
 	{ data: 'limit_date' },
 	{ data: 'limit_amount' },
 	{ data: 'total_buy_price' },
@@ -58,6 +54,17 @@ const columns = [
     data: 'percentage_used',
     render: function (data) {
         return data + '%';
+    }
+  },
+  {
+    data: 'action',
+    searchable: false,
+    render: function () {
+			return `
+				<button title="Delete" class="btn btn-icon-only text-danger btn-sm d-inline-flex align-items-center my-0 limit-delete-btn">
+					<span class="material-icons-outlined fs-5">delete</span>
+				</button>
+			`;
     }
   }
 ]
@@ -77,6 +84,35 @@ const options = {
     },
   },
 }
+
+$(document).ready(() => {
+  $('#limits-table tbody').on('click', '.limit-delete-btn', function () {
+    const data = dt.row($(this).parents('tr')).data();
+    const tradeId = data.id;
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'Cancel'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .delete(`/user/limits/delete-limit/${tradeId}`)
+          .then(response => {
+            toast.add({ type: 'success', message: response.data.message })
+            dt.ajax.reload(null, false);
+          })
+          .catch(error => {
+            console.error("Error deleting trade:", error);
+          });
+      }
+    });
+  });
+});
 
 onMounted(() => {
 	dt = table.value.dt
@@ -133,6 +169,7 @@ onMounted(() => {
                         <th>Limit Amount</th>
                         <th>Amount Used</th>
                         <th>Percentage</th>
+                        <th>Actions</th>
                       </tr>
                     </thead>
                     <tbody></tbody>

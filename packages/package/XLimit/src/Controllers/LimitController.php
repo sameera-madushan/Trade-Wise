@@ -59,7 +59,7 @@ class LimitController extends Controller
             $percentageUsed = $limit->limit > 0 ? ($totalBuyPrice / $limit->limit) * 100 : 0;
 
             $result[] = [
-                'timestamp' => $timestamp,
+                'id' => $limit->id,
                 'limit_date' => $limit->date,
                 'limit_amount' => $limit->limit,
                 'total_buy_price' => $totalBuyPrice,
@@ -72,6 +72,27 @@ class LimitController extends Controller
         }
 
         return response()->json($result);
+    }
+
+    public function deleteLimit($id)
+    {
+        DB::beginTransaction();
+
+        try {
+            TradeLimit::find($id)->delete();
+            DB::commit();
+            return response()->json([
+                'type' => 'success',
+                'message' => 'Limit deleted successfully'
+            ], 200);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            \Log::error("Error deleting limit: " . $e->getMessage());
+            return response()->json([
+                'type' => 'error',
+                'message' => 'Error deleting limit'
+            ], 500);
+        }
     }
 
 }
