@@ -74,7 +74,7 @@ onMounted(async () => {
           label: "Net PnL",
           data: monthlyResponse.data.net_pnl,
           borderWidth: 1,
-          borderColor: yearlyResponse.data.net_pnl.map((value) =>
+          borderColor: monthlyResponse.data.net_pnl.map((value) =>
             value >= 0 ? 'rgb(75, 192, 192)' : 'rgb(255, 99, 132)'
           ),
           backgroundColor: generateColors(monthlyResponse.data.net_pnl),
