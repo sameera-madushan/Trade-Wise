@@ -88,7 +88,7 @@ const options = {
 $(document).ready(() => {
   $('#limits-table tbody').on('click', '.limit-delete-btn', function () {
     const data = dt.row($(this).parents('tr')).data();
-    const tradeId = data.id;
+    const limitId = data.id;
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -101,7 +101,7 @@ $(document).ready(() => {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .delete(`/user/limits/delete-limit/${tradeId}`)
+          .delete(`/user/limits/delete-limit/${limitId}`)
           .then(response => {
             toast.add({ type: 'success', message: response.data.message })
             dt.ajax.reload(null, false);

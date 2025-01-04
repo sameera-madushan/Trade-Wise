@@ -103,23 +103,30 @@ class CalendarController extends Controller
 
             if (!$trade) {
                 DB::rollBack();
-                return redirect()->back()->with('message', ['type' => 'error', 'message' => 'Trade not found']);
+                return response()->json([
+                    'type' => 'error',
+                    'message' => 'Trade not found'
+                ], 500);
             }
 
             $trade->delete();
 
             DB::commit();
 
-            return redirect("/user/calendar/$timestamp")
-                ->with('message', ['type' => 'success', 'message' => 'Trade deleted successfully'])
-                ->setStatusCode(303);
+            return response()->json([
+                    'type' => 'success',
+                    'message' => 'Trade deleted successfully'
+                ], 200);
 
         } catch (\Exception $e) {
 
             DB::rollBack();
 
             \Log::error("Error deleting trade: " . $e->getMessage());
-            return redirect()->back()->with('message', ['type' => 'error', 'message' => 'An error occurred while deleting the trade.']);
+            return response()->json([
+                'type' => 'error',
+                'message' => 'An error occurred while deleting the trade.'
+            ], 500);
         }
     }
 

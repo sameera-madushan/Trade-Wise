@@ -6,6 +6,8 @@ import { isRequired, isNumeric } from 'intus/rules'
 import { useValidatedForm } from '@/Composables';
 import axios from 'axios';
 import NoteModal from './NoteModal.vue';
+import Swal from 'sweetalert2'
+import { toast } from '@/stores'
 
 const { proxy } = instance()
 
@@ -250,17 +252,29 @@ $(document).ready(() => {
 $(document).ready(() => {
 	$('#trades-table tbody').on('click', '.trade-delete-btn', function () {
 		const data = dt.row($(this).parents('tr')).data();
-        const tradeId = data.id;
-
-		if (confirm("Are you sure you want to delete this trade?")) {
-			axios.delete(`/user/calendar/${props.timestamp}/${tradeId}/delete-trade`)
-				.then(response => {
-					dt.ajax.reload(null, false);
-				})
-				.catch(error => {
-					console.error("Error deleting trade:", error);
-				});
-		}
+    const tradeId = data.id;
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'Cancel'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .delete(`/user/calendar/${props.timestamp}/${tradeId}/delete-trade`)
+          .then(response => {
+            toast.add({ type: 'success', message: response.data.message })
+            dt.ajax.reload(null, false);
+          })
+          .catch(error => {
+            console.error("Error deleting trade:", error);
+          });
+      }
+    });
 	});
 });
 
