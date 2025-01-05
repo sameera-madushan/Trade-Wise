@@ -8,7 +8,6 @@ const form = useForm({
 	email: '',
 	password: '',
 	password_confirmation: '',
-	terms: false,
 })
 
 const submit = () => {
@@ -122,16 +121,6 @@ const submit = () => {
 										<div v-show="form.errors.password_confirmation" class="mt-2">
 											<p class="text-sm text-danger">{{ form.errors.password_confirmation }}</p>
 										</div>
-									</div>
-								</div>
-
-								<!-- Terms & Conditions -->
-								<div class="mb-4">
-									<div class="form-check">
-										<input class="form-check-input" type="checkbox" required />
-										<label class="form-check-label fw-normal mb-0" for="remember">
-											I agree to the <a href="#" class="fw-bold">terms and conditions</a>
-										</label>
 									</div>
 								</div>
 
