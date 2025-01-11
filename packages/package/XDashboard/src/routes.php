@@ -20,7 +20,7 @@ Route::group(['middleware' => ['web', 'auth', 'admin']], function () {
     Route::prefix('/admin')->group(function () {
 
         Route::get('/', [DashboardController::class, 'adminIndex'])->name('admin.dashboard');
-
+        Route::get('/get-users-count', [DashboardController::class, 'userCount'])->name('get.users.count');
     });
 
 });

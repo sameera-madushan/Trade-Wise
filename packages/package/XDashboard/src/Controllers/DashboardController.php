@@ -131,4 +131,11 @@ class DashboardController extends Controller
         return response()->json($todayTrades);
     }
 
+    public function userCount()
+    {
+        $userCount = DB::table('users')->count();
+
+        return response()->json($userCount);
+    }
+
 }

@@ -1,21 +1,52 @@
 <script setup>
 import { Link } from '@inertiajs/vue3'
+import { onMounted, ref } from 'vue'
+import { usePage } from '@inertiajs/vue3'
+
+const currentTime = ref('')
+const greting = ref('')
+const { props } = usePage()
+const userName = ref(props.auth.user.name)
+
+const updateTime = () => {
+	const now = new Date()
+	currentTime.value = now.toLocaleString()
+	const hour = now.getHours()
+	if (hour < 12) {
+		greting.value = `🌅 Good Morning, ${userName.value}`
+	} else if (hour < 18) {
+		greting.value = `☀️ Good Afternoon, ${userName.value}`
+	} else {
+		greting.value = `🌙 Good Evening, ${userName.value}`
+	}
+}
+
+onMounted(() => {
+	updateTime()
+	setInterval(updateTime, 1000)
+})
 </script>
 
 <template>
-	<nav class="navbar navbar-top navbar-expand navbar-dashboard navbar-dark ps-0 pe-2 pb-0">
+	<nav class="pb-3 mt-2 navbar navbar-top navbar-expand navbar-dashboard navbar-theme-primary navbar-dark ps-0 pe-2 mb-4">
 		<div class="container-fluid px-0">
 			<div id="navbarSupportedContent" class="d-flex justify-content-between w-100">
 				<div class="d-flex align-items-center">
+          <div class="greeting-text ms-3">
+						{{ greting }}
+					</div>
 				</div>
 				<!-- Navbar links -->
 				<ul class="navbar-nav align-items-center">
+          <div class="time-text me-3">
+						{{ currentTime }}
+					</div>
 					<li class="nav-item dropdown ms-lg-3">
 						<a class="nav-link dropdown-toggle pt-1 px-0" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 							<div class="media d-flex align-items-center">
 								<img class="avatar rounded-circle" alt="Image placeholder" src="/assets/img/avatar/placeholder.png" />
 								<div class="media-body ms-2 text-dark align-items-center d-none d-lg-block">
-									<span class="mb-0 font-small fw-bold text-gray-900">{{ $page.props.auth.user.name }}</span>
+									<!-- <span class="mb-0 font-small fw-bold text-gray-900">{{ $page.props.auth.user.name }}</span> -->
 								</div>
 							</div>
 						</a>
@@ -49,3 +80,16 @@ import { Link } from '@inertiajs/vue3'
 		</div>
 	</nav>
 </template>
+
+<style scoped>
+.time-text {
+	font-size: 1.2rem;
+	font-weight: 500;
+	color: white;
+}
+.greeting-text {
+	font-size: 1.5rem;
+	font-weight: 500;
+	color: white;
+}
+</style>
