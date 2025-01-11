@@ -15,6 +15,7 @@ use Package\XAuth\Controllers\PermissionController;
 use Package\XAuth\Controllers\ProfileController;
 use Package\XAuth\Controllers\RoleController;
 use Package\XAuth\Controllers\UserController;
+use Package\XDashboard\Controllers\DashboardController;
 
 Route::group(['middleware' => ['web', 'auth']], function () {
 
@@ -45,10 +46,6 @@ Route::group(['middleware' => ['web', 'auth', 'admin']], function () {
 
     Route::prefix('/admin')->group(function () {
 
-        Route::get('/', function () {
-            return Inertia::render('XAuth/Admin/Dashboard');
-        });
-
         Route::post('/get-permissions', [PermissionController::class, 'getPermissions']);
         Route::get('/get-permissions', [PermissionController::class, 'getPermissionsAsResource']);
 
@@ -72,10 +69,6 @@ Route::group(['middleware' => ['web', 'auth', 'admin']], function () {
 Route::group(['middleware' => ['web', 'auth', 'user']], function () {
 
     Route::prefix('/user')->group(function () {
-
-        Route::get('/', function () {
-            return Inertia::render('XAuth/User/Dashboard');
-        });
 
         Route::post('/get-permissions', [PermissionController::class, 'getPermissions']);
         Route::get('/get-permissions', [PermissionController::class, 'getPermissionsAsResource']);
