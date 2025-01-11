@@ -21,6 +21,7 @@ onMounted(async () => {
 </script>
 
 <template>
+  <Head title="Dashboard" />
 	<DashboardLayout>
 		<div class="row mt-4 mb-4">
 			<div class="col-12 col-xl-9">
