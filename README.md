@@ -1,6 +1,6 @@
 ![logo_white](https://github.com/user-attachments/assets/20d2e574-c88c-4934-8e53-7edcfdf21060)
 
-TradeWise is an open source trading journal platform that helps users document, track, and analyze their trades, offering insights into trading performance, profit and loss (PnL) analysis, and more to support informed decision-making.
+TradeWise is an open source spot trading journal platform that helps users document, track, and analyze their trades, offering insights into trading performance, profit and loss (PnL) analysis, and more to support informed decision-making.
 
 # Key Features
 
@@ -9,7 +9,7 @@ TradeWise is an open source trading journal platform that helps users document, 
   
   - A centralized location displaying key performance metrics and a high-level summary of trading activity.
   
-  ![Dashboard-TRADE-WISE](https://github.com/user-attachments/assets/91afd8c8-3620-476b-b33a-6e2805e595b1)
+  ![Dashboard-TRADE-WISE](https://github.com/user-attachments/assets/2957571a-df93-4f7a-a2a4-5716c7bfb522)
 </details>
 
 <details>
@@ -18,7 +18,7 @@ TradeWise is an open source trading journal platform that helps users document, 
   - Document details such as currency pair, buy/sell values, prices, and positions.
   - Provides real-time profit and loss calculations with detailed percentage breakdowns.
   
-  ![Jan-04-2025-TRADE-WISE](https://github.com/user-attachments/assets/8c47e12f-fd59-4b03-91bb-92b9750d232f)
+  ![Jan-04-2025-TRADE-WISE](https://github.com/user-attachments/assets/ed7e0342-4938-4dbf-9785-81b5f38f5e26)
 </details>
 
 <details>
@@ -34,7 +34,7 @@ TradeWise is an open source trading journal platform that helps users document, 
   
   - Set a maximum trade limit for each day to enforce disciplined trading and avoid over-trading.
   
-  ![Limits-TRADE-WISE](https://github.com/user-attachments/assets/b257911c-8985-4689-bf75-07848247ecc2)
+  ![Limits-TRADE-WISE](https://github.com/user-attachments/assets/b59ef774-ae19-4334-832a-52125ce7b199)
 </details>
 
 <details>
@@ -43,7 +43,7 @@ TradeWise is an open source trading journal platform that helps users document, 
   - Visualize daily profits and losses in a calendar view.
   - Limited trading days are indicated to help traders manage and review their activity effectively.
   
-  ![Calander-TRADE-WISE](https://github.com/user-attachments/assets/51b62eb7-0622-4657-a62c-bfef3290fe4a)
+  ![Calander-TRADE-WISE](https://github.com/user-attachments/assets/f6c4770c-c9a2-47af-9578-6dfbe3b5b8a1)
 </details>
 
 <details>
@@ -52,14 +52,14 @@ TradeWise is an open source trading journal platform that helps users document, 
   - Provides Daily, Monthly, and Yearly Reports to analyze trading performance across different timeframes.
   - Supports exporting reports to Excel for detailed analysis and record-keeping.
   
-  ![Monthly-PnL-Report-TRADE-WISE](https://github.com/user-attachments/assets/84b61fba-fdea-4113-b30a-9bc2d4a38923)
+  ![Monthly-PnL-Report-TRADE-WISE](https://github.com/user-attachments/assets/6a263742-9e81-4e7b-867e-81801519f569)
 </details>
 
 <details>
   <summary>Multi-Tenancy</summary>
   
   - Fully supports multi-tenancy, allowing multiple users to operate within the same platform while maintaining data isolation and security.
-  - Each tenant has a separate database or schema, ensuring data integrity and performance.
+  - Each tenant has a separate database, ensuring data integrity and performance.
 
 </details>
 
