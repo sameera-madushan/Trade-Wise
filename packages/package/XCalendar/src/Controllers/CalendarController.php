@@ -72,7 +72,7 @@ class CalendarController extends Controller
 
     public function getTrades($timestamp)
     {
-        $trades = Trade::where('timestamp', $timestamp)->get();
+        $trades = Trade::where('timestamp', $timestamp);
 
         return DataTables::of($trades)
         ->addColumn('pnl_percentage', function ($trade) {
