@@ -53,34 +53,6 @@ onMounted(async () => {
 							</div>
 						</div>
 					</div>
-
-					<!-- Orders Card -->
-					<div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
-						<div class="card">
-							<div class="card-body p-3">
-								<div class="row">
-									<div class="col-8">
-										<div class="numbers">
-											<p class="text-sm mb-0 text-uppercase font-weight-bold">Online Users</p>
-											<h5 class="font-weight-bolder">
-												{{ ordersCount ?? '0' }}
-											</h5>
-											<p class="mb-0">
-												<a :href="'/admin/orders'" class="text-success text-sm font-weight-bolder">
-													View All Orders
-												</a>
-											</p>
-										</div>
-									</div>
-									<div class="col-4 text-end">
-										<div class="icon icon-shape bg-gradient-success shadow-success text-center rounded-circle">
-											<span class="material-icons">cloud</span>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
 				</div>
 			</div>
 		</div>
