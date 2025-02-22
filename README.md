@@ -26,7 +26,7 @@ TradeWise is an open source spot trading journal platform that helps users docum
   
   - Add detailed notes for each trade, including images and annotations for trade strategy analysis.
   
-  ![Jan-04-2025-TRADE-WISE (1)](https://github.com/user-attachments/assets/27334c2f-e753-4074-8a8f-be21c0c7144d)
+  ![Jan-04-2025-TRADE-WISE (1)](https://github.com/user-attachments/assets/f5314196-3ccb-4844-a7f2-9e17ca1bb8d9)
 </details>
 
 <details>
@@ -113,6 +113,13 @@ Finally, run your project in the browser!
 npm run dev
 php artisan serve
 ```
+## Running Migrations for All User Databases.
+Before running any commands for individual users, you must first run the base migration to ensure the main application database is set up. This can be done using the following `php artisan migrate` command.
+
+After that, you will need to run migrations for all user databases using `php artisan migrate:all-users` command.
+
+This command loops through all registered users, switches to their respective database, and runs the migrations on them. It uses the `sqlite_user` database connection configured for each user in the system.
+
 </details>
 
 # Tech Stack
@@ -120,6 +127,7 @@ php artisan serve
 <div style="display: flex; align-items: center; gap: 20px;">
   <img src="https://github.com/vuejs/art/blob/master/logo.png" alt="Vue.js" width="50" />
   <img src="https://github.com/laravel/art/blob/master/laravel-logo.png" alt="Laravel" width="50" />
+  <img src="https://avatars.githubusercontent.com/u/47703742?s=200&v=4" alt="Laravel" width="50" />
   <img src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/mysql.png" alt="Laravel" width="50" />
 </div>
 
