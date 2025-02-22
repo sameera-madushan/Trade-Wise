@@ -313,28 +313,28 @@ onMounted(() => {
 							<div class="row">
 								<div class="col-12 col-sm-6 col-md-3">
 									<label for="buy_value" class="col-form-label">Buy Value ($)</label>
-									<input id="buy_value" v-model="form.buy_value" type="text" class="form-control" :class="{ 'is-invalid': form.errors.buy_value }"  placeholder="Buy Value"/>
+									<input id="buy_value" v-model="form.buy_value" type="number" class="form-control" :class="{ 'is-invalid': form.errors.buy_value }"  placeholder="Buy Value"/>
                   <div v-show="form.errors.buy_value" class="invalid-feedback">{{ form.errors.buy_value }}</div>
 								</div>
 								<div class="col-12 col-sm-6 col-md-3">
 									<label for="buy_price" class="col-form-label">Buy Price ($)</label>
-									<input id="buy_price" v-model="form.buy_price" type="text" class="form-control" :class="{ 'is-invalid': form.errors.buy_price }" placeholder="Buy Price"/>
+									<input id="buy_price" v-model="form.buy_price" type="number" class="form-control" :class="{ 'is-invalid': form.errors.buy_price }" placeholder="Buy Price"/>
                   <div v-show="form.errors.buy_price" class="invalid-feedback">{{ form.errors.buy_price }}</div>
 								</div>
                 <div class="col-12 col-sm-6 col-md-3">
 									<label for="sell_value" class="col-form-label">Sell Value ($)</label>
-									<input id="sell_value" v-model="form.sell_value" type="text" class="form-control" :class="{ 'is-invalid': form.errors.sell_value }" placeholder="Sell Value"/>
+									<input id="sell_value" v-model="form.sell_value" type="number" class="form-control" :class="{ 'is-invalid': form.errors.sell_value }" placeholder="Sell Value"/>
                   <div v-show="form.errors.sell_value" class="invalid-feedback">{{ form.errors.sell_value }}</div>
 								</div>
 								<div class="col-12 col-sm-6 col-md-3">
 									<label for="sell_price" class="col-form-label">Sell Price ($)</label>
-									<input id="sell_price" v-model="form.sell_price" type="text" class="form-control" placeholder="Sell Price" readonly/>
+									<input id="sell_price" v-model="form.sell_price" type="number" class="form-control" placeholder="Sell Price" readonly/>
 								</div>
 							</div>
 							<div class="row">
                 <div class="col-12 col-sm-6 col-md-3">
 									<label for="bought_amount" class="col-form-label">Bought Amount</label>
-									<input id="bought_amount" v-model="form.bought_amount" type="text" class="form-control" placeholder="Bought Amount" readonly/>
+									<input id="bought_amount" v-model="form.bought_amount" type="number" class="form-control" placeholder="Bought Amount" readonly/>
 								</div>
 								<div class="col-12 col-sm-6 col-md-3">
 									<label for="position" class="col-form-label">Position</label>
