@@ -36,14 +36,8 @@ function checkRoles(bigArray, subarray) {
 								>Dashboard</Link
 							>
 							<Link
-								v-if="$page.props.auth.user && checkRoles($page.props.auth.user.roles, ['AGENCY_ADMIN', 'AGENCY_USER'])"
-								href="/agency"
-								class="dashboard-link"
-								>Dashboard</Link
-							>
-							<Link
-								v-if="$page.props.auth.user && checkRoles($page.props.auth.user.roles, ['AGENT_ADMIN', 'AGENT_USER'])"
-								href="/agent"
+								v-if="$page.props.auth.user && checkRoles($page.props.auth.user.roles, ['USER'])"
+								href="/user"
 								class="dashboard-link"
 								>Dashboard</Link
 							>
